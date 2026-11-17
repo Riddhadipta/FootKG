@@ -1,0 +1,1052 @@
+@prefix footkg: <http://tib.eu/footkg/ontology#> .
+@prefix footres: <http://tib.eu/footkg/resource/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://tib.eu/footkg/ontology> a owl:Ontology ;
+    rdfs:label "FootKG: Tactical Football & Scouting Ontology"@en ;
+    rdfs:comment "An ontology for multi-hop tactical reasoning, player role taxonomy, spatial pitch dynamics, and intelligent scouting."@en ;
+    owl:versionInfo "1.0.0" .
+
+footkg:Competition a owl:Class ;
+    rdfs:label "Football Competition"@en .
+
+footkg:Match a owl:Class ;
+    rdfs:label "Football Match"@en .
+
+footkg:NationalTeam a owl:Class ;
+    rdfs:label "National Team"@en ;
+    rdfs:subClassOf footkg:Team .
+
+footkg:Pressure a owl:Class ;
+    rdfs:label "Pressure Action"@en ;
+    rdfs:subClassOf footkg:DefensiveAction .
+
+footkg:SweeperKeeper a owl:Class ;
+    rdfs:label "Sweeper Keeper"@en ;
+    rdfs:subClassOf footkg:DefensiveRole .
+
+footkg:TargetMan a owl:Class ;
+    rdfs:label "Target Man"@en ;
+    rdfs:subClassOf footkg:AttackingRole .
+
+footkg:adjacentTo a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "is spatially adjacent to"@en ;
+    rdfs:domain footkg:SpatialZone ;
+    rdfs:range footkg:SpatialZone .
+
+footkg:age a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:integer .
+
+footkg:coachedBy a owl:ObjectProperty ;
+    rdfs:label "has been coached by"@en ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Manager .
+
+footkg:contractUntil a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:gYear .
+
+footkg:directlyPrecedes a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "directly precedes event in chain"@en ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:MatchEvent .
+
+footkg:employsSystem a owl:ObjectProperty ;
+    rdfs:label "employs tactical system"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( footkg:Manager footkg:Team ) ] ;
+    rdfs:range footkg:TacticalSystem .
+
+footkg:exploitsWeaknessIn a owl:ObjectProperty ;
+    rdfs:label "exploits structural weakness in"@en ;
+    rdfs:domain footkg:Formation ;
+    rdfs:range footkg:Formation .
+
+footkg:formerlyPlayedFor a owl:ObjectProperty ;
+    rdfs:label "formerly played for"@en ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Team .
+
+footkg:hasChemistryWith a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "shares high team chemistry with"@en ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Player .
+
+footkg:inPossessionZone a owl:ObjectProperty ;
+    rdfs:label "operates in zone when in possession"@en ;
+    rdfs:subPropertyOf footkg:operatesInZone .
+
+footkg:leavesVulnerableZone a owl:ObjectProperty ;
+    rdfs:label "leaves zone vulnerable during transition"@en ;
+    rdfs:domain footkg:Formation ;
+    rdfs:range footkg:SpatialZone .
+
+footkg:managedBy a owl:ObjectProperty ;
+    rdfs:label "managed by"@en ;
+    rdfs:domain footkg:Team ;
+    rdfs:range footkg:Manager .
+
+footkg:marketValueEUR a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:decimal .
+
+footkg:nationality a owl:DatatypeProperty ;
+    rdfs:domain footkg:Person ;
+    rdfs:range xsd:string .
+
+footkg:originatesInZone a owl:ObjectProperty ;
+    rdfs:label "originates in zone"@en ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:SpatialZone .
+
+footkg:outOfPossessionZone a owl:ObjectProperty ;
+    rdfs:label "operates in zone when out of possession"@en ;
+    rdfs:subPropertyOf footkg:operatesInZone .
+
+footkg:passCompletionPct a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:performedBy a owl:ObjectProperty ;
+    rdfs:label "performed by player"@en ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:Player .
+
+footkg:playerName a owl:DatatypeProperty ;
+    rdfs:domain footkg:Person ;
+    rdfs:range xsd:string .
+
+footkg:playsFor a owl:ObjectProperty ;
+    rdfs:label "plays for team"@en ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Team .
+
+footkg:preferredFoot a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:string .
+
+footkg:pressuresPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:primaryRole a owl:ObjectProperty ;
+    rdfs:label "primary tactical role"@en ;
+    rdfs:subPropertyOf footkg:playsRole .
+
+footkg:progressivePassesPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:secondaryRole a owl:ObjectProperty ;
+    rdfs:label "secondary tactical role"@en ;
+    rdfs:subPropertyOf footkg:playsRole .
+
+footkg:synergizesWith a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "synergizes tactically with"@en ;
+    rdfs:domain footkg:TacticalRole ;
+    rdfs:range footkg:TacticalRole .
+
+footkg:terminatesInZone a owl:ObjectProperty ;
+    rdfs:label "terminates in zone"@en ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:SpatialZone .
+
+footkg:transitionsToInPossession a owl:ObjectProperty ;
+    rdfs:label "transitions in possession to"@en ;
+    rdfs:domain footkg:Formation ;
+    rdfs:range footkg:Formation .
+
+footkg:utilizesFormation a owl:ObjectProperty ;
+    rdfs:label "utilizes formation"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( footkg:Team footkg:TacticalSystem ) ] ;
+    rdfs:range footkg:Formation .
+
+footkg:xAPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:xGPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:zoneDescription a owl:DatatypeProperty ;
+    rdfs:domain footkg:SpatialZone ;
+    rdfs:range xsd:string .
+
+footres:Club_InterMilan a footkg:ClubTeam ;
+    rdfs:label "FC Internazionale Milano"@en ;
+    footkg:managedBy footres:Manager_SimoneInzaghi .
+
+footres:Club_Liverpool a footkg:ClubTeam ;
+    rdfs:label "Liverpool FC"@en ;
+    footkg:managedBy footres:Manager_ArneSlot .
+
+footres:Event_001_Rodri_BallRecovery a footkg:BallRecovery ;
+    footkg:directlyPrecedes footres:Event_002_Rodri_ProgressivePass ;
+    footkg:originatesInZone footres:Zone3_DefCentral ;
+    footkg:performedBy footres:Player_Rodri ;
+    footkg:terminatesInZone footres:Zone8_MidCentral .
+
+footres:Formation_5_3_2_Counter a footkg:Formation ;
+    rdfs:label "5-3-2 Direct Counter"@en ;
+    footkg:exploitsWeaknessIn footres:Formation_4_3_3 ;
+    footkg:leavesVulnerableZone footres:Zone11_AttRightFlank,
+        footres:Zone15_AttLeftFlank .
+
+footres:Manager_JurgenKlopp a footkg:Manager ;
+    rdfs:label "Jurgen Klopp"@en ;
+    footkg:employsSystem footres:System_Gegenpressing ;
+    footkg:nationality "Germany"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_3_3 .
+
+footres:Player_AdamWharton a footkg:Player ;
+    rdfs:label "Adam Wharton"@en ;
+    footkg:age 20 ;
+    footkg:coachedBy footres:Manager_OliverGlasner ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:marketValueEUR 30000000.0 ;
+    footkg:nationality "England"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral ;
+    footkg:passCompletionPct "89.4"^^xsd:float ;
+    footkg:playerName "Adam Wharton"^^xsd:string ;
+    footkg:playsFor footres:Club_CrystalPalace ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "16.2"^^xsd:float ;
+    footkg:primaryRole footres:Role_DeepLyingPlaymaker ;
+    footkg:progressivePassesPer90 "7.9"^^xsd:float ;
+    footkg:xAPer90 "0.21"^^xsd:float ;
+    footkg:xGPer90 "0.06"^^xsd:float .
+
+footres:Player_ArthurVermeeren a footkg:Player ;
+    rdfs:label "Arthur Vermeeren"@en ;
+    footkg:age 19 ;
+    footkg:coachedBy footres:Manager_DiegoSimeone ;
+    footkg:inPossessionZone footres:Zone7_MidRightHalfSpace ;
+    footkg:marketValueEUR 25000000.0 ;
+    footkg:nationality "Belgium"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone8_MidCentral ;
+    footkg:passCompletionPct "89.1"^^xsd:float ;
+    footkg:playerName "Arthur Vermeeren"^^xsd:string ;
+    footkg:playsFor footres:Club_AtleticoMadrid ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "18.0"^^xsd:float ;
+    footkg:primaryRole footres:Role_Mezzala ;
+    footkg:progressivePassesPer90 "7.1"^^xsd:float ;
+    footkg:xAPer90 "0.17"^^xsd:float ;
+    footkg:xGPer90 "0.09"^^xsd:float .
+
+footres:Player_CarlosBaleba a footkg:Player ;
+    rdfs:label "Carlos Baleba"@en ;
+    footkg:age 20 ;
+    footkg:coachedBy footres:Manager_PepGuardiola ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:marketValueEUR 22000000.0 ;
+    footkg:nationality "Cameroon"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral ;
+    footkg:passCompletionPct "88.1"^^xsd:float ;
+    footkg:playerName "Carlos Baleba"^^xsd:string ;
+    footkg:playsFor footres:Club_Brighton ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "19.4"^^xsd:float ;
+    footkg:primaryRole footres:Role_AnchorMan ;
+    footkg:progressivePassesPer90 "6.9"^^xsd:float ;
+    footkg:xAPer90 "0.11"^^xsd:float ;
+    footkg:xGPer90 "0.04"^^xsd:float .
+
+footres:Player_EduardoCamavinga a footkg:Player ;
+    rdfs:label "Eduardo Camavinga"@en ;
+    footkg:age 22 ;
+    footkg:coachedBy footres:Manager_CarloAncelotti ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:marketValueEUR 100000000.0 ;
+    footkg:nationality "France"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone4_DefLeftHalfSpace ;
+    footkg:passCompletionPct "90.2"^^xsd:float ;
+    footkg:playerName "Eduardo Camavinga"^^xsd:string ;
+    footkg:playsFor footres:Club_RealMadrid ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "21.4"^^xsd:float ;
+    footkg:primaryRole footres:Role_BoxToBoxMidfielder ;
+    footkg:progressivePassesPer90 "7.1"^^xsd:float ;
+    footkg:xAPer90 "0.15"^^xsd:float ;
+    footkg:xGPer90 "0.09"^^xsd:float .
+
+footres:Player_FlorianWirtz a footkg:Player ;
+    rdfs:label "Florian Wirtz"@en ;
+    footkg:age 21 ;
+    footkg:coachedBy footres:Manager_XabiAlonso ;
+    footkg:inPossessionZone footres:Zone14_AttLeftHalfSpace ;
+    footkg:marketValueEUR 130000000.0 ;
+    footkg:nationality "Germany"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone13_AttZone14 ;
+    footkg:passCompletionPct "85.3"^^xsd:float ;
+    footkg:playerName "Florian Wirtz"^^xsd:string ;
+    footkg:playsFor footres:Club_BayerLeverkusen ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "16.1"^^xsd:float ;
+    footkg:primaryRole footres:Role_InsideForward ;
+    footkg:progressivePassesPer90 "8.4"^^xsd:float ;
+    footkg:xAPer90 "0.44"^^xsd:float ;
+    footkg:xGPer90 "0.38"^^xsd:float .
+
+footres:Player_JeremieFrimpong a footkg:Player ;
+    rdfs:label "Jeremie Frimpong"@en ;
+    footkg:age 23 ;
+    footkg:coachedBy footres:Manager_PepGuardiola,
+        footres:Manager_XabiAlonso ;
+    footkg:formerlyPlayedFor footres:Club_ManchesterCity ;
+    footkg:inPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:marketValueEUR 50000000.0 ;
+    footkg:nationality "Netherlands"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone6_MidRightFlank ;
+    footkg:passCompletionPct "82.0"^^xsd:float ;
+    footkg:playerName "Jeremie Frimpong"^^xsd:string ;
+    footkg:playsFor footres:Club_BayerLeverkusen ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "14.8"^^xsd:float ;
+    footkg:primaryRole footres:Role_OverlappingWingback ;
+    footkg:progressivePassesPer90 "4.9"^^xsd:float ;
+    footkg:xAPer90 "0.31"^^xsd:float ;
+    footkg:xGPer90 "0.35"^^xsd:float .
+
+footres:Player_OscarGloukh a footkg:Player ;
+    rdfs:label "Oscar Gloukh"@en ;
+    footkg:age 20 ;
+    footkg:coachedBy footres:Manager_RogerSchmidt ;
+    footkg:inPossessionZone footres:Zone14_AttLeftHalfSpace ;
+    footkg:marketValueEUR 25000000.0 ;
+    footkg:nationality "Israel"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone13_AttZone14 ;
+    footkg:passCompletionPct "84.9"^^xsd:float ;
+    footkg:playerName "Oscar Gloukh"^^xsd:string ;
+    footkg:playsFor footres:Club_Benfica ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "15.3"^^xsd:float ;
+    footkg:primaryRole footres:Role_InsideForward ;
+    footkg:progressivePassesPer90 "7.6"^^xsd:float ;
+    footkg:xAPer90 "0.39"^^xsd:float ;
+    footkg:xGPer90 "0.31"^^xsd:float .
+
+footres:Player_RayanAitNouri a footkg:Player ;
+    rdfs:label "Rayan Ait-Nouri"@en ;
+    footkg:age 23 ;
+    footkg:coachedBy footres:Manager_OliverGlasner ;
+    footkg:inPossessionZone footres:Zone9_MidLeftHalfSpace ;
+    footkg:marketValueEUR 35000000.0 ;
+    footkg:nationality "Algeria"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone4_DefLeftHalfSpace ;
+    footkg:passCompletionPct "86.8"^^xsd:float ;
+    footkg:playerName "Rayan Ait-Nouri"^^xsd:string ;
+    footkg:playsFor footres:Club_CrystalPalace ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "16.5"^^xsd:float ;
+    footkg:primaryRole footres:Role_InvertedFullback ;
+    footkg:progressivePassesPer90 "7.0"^^xsd:float ;
+    footkg:xAPer90 "0.24"^^xsd:float ;
+    footkg:xGPer90 "0.12"^^xsd:float .
+
+footres:Role_BallPlayingDefender a footkg:BallPlayingDefender ;
+    rdfs:label "Ball-Playing Defender"@en ;
+    footkg:inPossessionZone footres:Zone3_DefCentral ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral .
+
+footres:Role_PressingForward a footkg:PressingForward ;
+    rdfs:label "Pressing Forward"@en ;
+    footkg:inPossessionZone footres:Zone17_BoxCentral ;
+    footkg:outOfPossessionZone footres:Zone13_AttZone14 .
+
+footres:Zone16_BoxRight a footkg:CentralCorridor,
+        footkg:PitchZone ;
+    rdfs:label "Opponent 6-yard Box Right"@en ;
+    footkg:zoneDescription "Opponent 6-yard Box Right"^^xsd:string .
+
+footres:Zone18_BoxLeft a footkg:CentralCorridor,
+        footkg:PitchZone ;
+    rdfs:label "Opponent 6-yard Box Left"@en ;
+    footkg:zoneDescription "Opponent 6-yard Box Left"^^xsd:string .
+
+footkg:AnchorMan a owl:Class ;
+    rdfs:label "Anchor Man / Pivot (Busquets archetype)"@en ;
+    rdfs:subClassOf footkg:MidfieldRole .
+
+footkg:BallPlayingDefender a owl:Class ;
+    rdfs:label "Ball-Playing Central Defender"@en ;
+    rdfs:subClassOf footkg:DefensiveRole .
+
+footkg:BoxToBoxMidfielder a owl:Class ;
+    rdfs:label "Box-to-Box Midfielder"@en ;
+    rdfs:subClassOf footkg:MidfieldRole .
+
+footkg:DeepLyingPlaymaker a owl:Class ;
+    rdfs:label "Deep-Lying Playmaker (Regista)"@en ;
+    rdfs:subClassOf footkg:MidfieldRole .
+
+footkg:DefensiveAction a owl:Class ;
+    rdfs:label "Defensive Action"@en ;
+    rdfs:subClassOf footkg:MatchEvent .
+
+footkg:DirectVertical a owl:Class ;
+    rdfs:label "Direct Vertical Transition"@en ;
+    rdfs:subClassOf footkg:TacticalSystem .
+
+footkg:FalseNine a owl:Class ;
+    rdfs:label "False Nine"@en ;
+    rdfs:subClassOf footkg:AttackingRole .
+
+footkg:Gegenpressing a owl:Class ;
+    rdfs:label "Gegenpressing (Counter-pressing)"@en ;
+    rdfs:subClassOf footkg:TacticalSystem .
+
+footkg:InsideForward a owl:Class ;
+    rdfs:label "Inside Forward"@en ;
+    rdfs:subClassOf footkg:WideRole .
+
+footkg:InvertedFullback a owl:Class ;
+    rdfs:label "Inverted Fullback"@en ;
+    rdfs:subClassOf footkg:WideRole .
+
+footkg:LowBlockCounter a owl:Class ;
+    rdfs:label "Low-Block Counter-Attack"@en ;
+    rdfs:subClassOf footkg:TacticalSystem .
+
+footkg:Mezzala a owl:Class ;
+    rdfs:label "Mezzala (Half-space Midfielder)"@en ;
+    rdfs:subClassOf footkg:MidfieldRole .
+
+footkg:OverlappingWingback a owl:Class ;
+    rdfs:label "Overlapping Wingback"@en ;
+    rdfs:subClassOf footkg:WideRole .
+
+footkg:PositionalPlay a owl:Class ;
+    rdfs:label "Positional Play (Juego de Posicion)"@en ;
+    rdfs:subClassOf footkg:TacticalSystem .
+
+footkg:PressingForward a owl:Class ;
+    rdfs:label "Pressing Forward"@en ;
+    rdfs:subClassOf footkg:AttackingRole .
+
+footkg:Raumdeuter a owl:Class ;
+    rdfs:label "Raumdeuter (Space Investigator)"@en ;
+    rdfs:subClassOf footkg:AttackingRole .
+
+footkg:Relationism a owl:Class ;
+    rdfs:label "Relationism (Appariement)"@en ;
+    rdfs:subClassOf footkg:TacticalSystem .
+
+footkg:TouchlineWinger a owl:Class ;
+    rdfs:label "Touchline Winger"@en ;
+    rdfs:subClassOf footkg:WideRole .
+
+footres:Club_Benfica a footkg:ClubTeam ;
+    rdfs:label "SL Benfica"@en ;
+    footkg:managedBy footres:Manager_RogerSchmidt .
+
+footres:Club_Brighton a footkg:ClubTeam ;
+    rdfs:label "Brighton & Hove Albion FC"@en ;
+    footkg:managedBy footres:Manager_PepGuardiola .
+
+footres:Club_PSV a footkg:ClubTeam ;
+    rdfs:label "PSV Eindhoven"@en ;
+    footkg:managedBy footres:Manager_ArneSlot .
+
+footres:Club_Porto a footkg:ClubTeam ;
+    rdfs:label "FC Porto"@en ;
+    footkg:managedBy footres:Manager_SimoneInzaghi .
+
+footres:Event_002_Rodri_ProgressivePass a footkg:ProgressivePass ;
+    footkg:directlyPrecedes footres:Event_003_Lewis_HalfSpaceCarry ;
+    footkg:originatesInZone footres:Zone8_MidCentral ;
+    footkg:performedBy footres:Player_Rodri ;
+    footkg:terminatesInZone footres:Zone7_MidRightHalfSpace .
+
+footres:Event_003_Lewis_HalfSpaceCarry a footkg:Pass ;
+    footkg:directlyPrecedes footres:Event_004_Doku_CutbackCross ;
+    footkg:originatesInZone footres:Zone7_MidRightHalfSpace ;
+    footkg:performedBy footres:Player_RicoLewis ;
+    footkg:terminatesInZone footres:Zone11_AttRightFlank .
+
+footres:Event_004_Doku_CutbackCross a footkg:ProgressivePass ;
+    footkg:originatesInZone footres:Zone11_AttRightFlank ;
+    footkg:performedBy footres:Player_JeremyDoku ;
+    footkg:terminatesInZone footres:Zone13_AttZone14 .
+
+footres:Formation_3_2_5_InPoss a footkg:Formation ;
+    rdfs:label "3-2-5 In-Possession Shape"@en ;
+    footkg:leavesVulnerableZone footres:Zone1_DefRightFlank,
+        footres:Zone5_DefLeftFlank .
+
+footres:Player_AlanVarela a footkg:Player ;
+    rdfs:label "Alan Varela"@en ;
+    footkg:age 23 ;
+    footkg:coachedBy footres:Manager_SimoneInzaghi ;
+    footkg:hasChemistryWith footres:Player_Rodri ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:marketValueEUR 35000000.0 ;
+    footkg:nationality "Argentina"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral ;
+    footkg:passCompletionPct "91.2"^^xsd:float ;
+    footkg:playerName "Alan Varela"^^xsd:string ;
+    footkg:playsFor footres:Club_Porto ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "17.0"^^xsd:float ;
+    footkg:primaryRole footres:Role_DeepLyingPlaymaker ;
+    footkg:progressivePassesPer90 "8.2"^^xsd:float ;
+    footkg:xAPer90 "0.16"^^xsd:float ;
+    footkg:xGPer90 "0.07"^^xsd:float .
+
+footres:Player_DeclanRice a footkg:Player ;
+    rdfs:label "Declan Rice"@en ;
+    footkg:age 25 ;
+    footkg:coachedBy footres:Manager_MikelArteta ;
+    footkg:hasChemistryWith footres:Player_BukayoSaka ;
+    footkg:inPossessionZone footres:Zone13_AttZone14 ;
+    footkg:marketValueEUR 110000000.0 ;
+    footkg:nationality "England"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone8_MidCentral ;
+    footkg:passCompletionPct "89.8"^^xsd:float ;
+    footkg:playerName "Declan Rice"^^xsd:string ;
+    footkg:playsFor footres:Club_Arsenal ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "18.2"^^xsd:float ;
+    footkg:primaryRole footres:Role_BoxToBoxMidfielder ;
+    footkg:progressivePassesPer90 "6.8"^^xsd:float ;
+    footkg:xAPer90 "0.22"^^xsd:float ;
+    footkg:xGPer90 "0.18"^^xsd:float .
+
+footres:Player_JohanBakayoko a footkg:Player ;
+    rdfs:label "Johan Bakayoko"@en ;
+    footkg:age 21 ;
+    footkg:coachedBy footres:Manager_ArneSlot ;
+    footkg:hasChemistryWith footres:Player_JeremyDoku ;
+    footkg:inPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:marketValueEUR 35000000.0 ;
+    footkg:nationality "Belgium"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:passCompletionPct "83.0"^^xsd:float ;
+    footkg:playerName "Johan Bakayoko"^^xsd:string ;
+    footkg:playsFor footres:Club_PSV ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "11.8"^^xsd:float ;
+    footkg:primaryRole footres:Role_TouchlineWinger ;
+    footkg:progressivePassesPer90 "5.2"^^xsd:float ;
+    footkg:xAPer90 "0.35"^^xsd:float ;
+    footkg:xGPer90 "0.36"^^xsd:float .
+
+footres:Player_JudeBellingham a footkg:Player ;
+    rdfs:label "Jude Bellingham"@en ;
+    footkg:age 21 ;
+    footkg:coachedBy footres:Manager_CarloAncelotti ;
+    footkg:hasChemistryWith footres:Player_BukayoSaka ;
+    footkg:inPossessionZone footres:Zone17_BoxCentral ;
+    footkg:marketValueEUR 180000000.0 ;
+    footkg:nationality "England"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone12_AttRightHalfSpace ;
+    footkg:passCompletionPct "87.6"^^xsd:float ;
+    footkg:playerName "Jude Bellingham"^^xsd:string ;
+    footkg:playsFor footres:Club_RealMadrid ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "17.5"^^xsd:float ;
+    footkg:primaryRole footres:Role_Raumdeuter ;
+    footkg:progressivePassesPer90 "5.4"^^xsd:float ;
+    footkg:xAPer90 "0.29"^^xsd:float ;
+    footkg:xGPer90 "0.52"^^xsd:float .
+
+footres:Player_OleksandrZinchenko a footkg:Player ;
+    rdfs:label "Oleksandr Zinchenko"@en ;
+    footkg:age 27 ;
+    footkg:coachedBy footres:Manager_MikelArteta,
+        footres:Manager_PepGuardiola ;
+    footkg:formerlyPlayedFor footres:Club_ManchesterCity ;
+    footkg:hasChemistryWith footres:Player_RicoLewis ;
+    footkg:inPossessionZone footres:Zone9_MidLeftHalfSpace ;
+    footkg:marketValueEUR 35000000.0 ;
+    footkg:nationality "Ukraine"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone4_DefLeftHalfSpace ;
+    footkg:passCompletionPct "88.5"^^xsd:float ;
+    footkg:playerName "Oleksandr Zinchenko"^^xsd:string ;
+    footkg:playsFor footres:Club_Arsenal ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "15.2"^^xsd:float ;
+    footkg:primaryRole footres:Role_InvertedFullback ;
+    footkg:progressivePassesPer90 "8.1"^^xsd:float ;
+    footkg:xAPer90 "0.19"^^xsd:float ;
+    footkg:xGPer90 "0.05"^^xsd:float .
+
+footres:System_LowBlockCounter a footkg:LowBlockCounter ;
+    rdfs:label "Low-Block Counter-Attack"@en .
+
+footres:System_Relationism a footkg:Relationism ;
+    rdfs:label "Relationism / Fluid Dynamic"@en .
+
+footkg:Agent a owl:Class ;
+    rdfs:label "Agent"@en .
+
+footkg:DefensiveRole a owl:Class ;
+    rdfs:label "Defensive Tactical Role"@en ;
+    rdfs:subClassOf footkg:TacticalRole .
+
+footkg:Pass a owl:Class ;
+    rdfs:label "Pass Event"@en ;
+    rdfs:subClassOf footkg:MatchEvent .
+
+footkg:ProgressivePass a owl:Class ;
+    rdfs:label "Progressive Pass"@en ;
+    rdfs:subClassOf footkg:Pass .
+
+footkg:operatesInZone a owl:ObjectProperty ;
+    rdfs:label "operates in spatial zone"@en ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( footkg:Player footkg:TacticalRole ) ] ;
+    rdfs:range footkg:SpatialZone .
+
+footkg:playsRole a owl:ObjectProperty ;
+    rdfs:label "fulfills tactical role"@en ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:TacticalRole .
+
+footres:Club_AtleticoMadrid a footkg:ClubTeam ;
+    rdfs:label "Club Atletico de Madrid"@en ;
+    footkg:managedBy footres:Manager_DiegoSimeone .
+
+footres:Club_BayerLeverkusen a footkg:ClubTeam ;
+    rdfs:label "Bayer 04 Leverkusen"@en ;
+    footkg:managedBy footres:Manager_XabiAlonso .
+
+footres:Club_CrystalPalace a footkg:ClubTeam ;
+    rdfs:label "Crystal Palace FC"@en ;
+    footkg:managedBy footres:Manager_OliverGlasner .
+
+footres:Club_RealMadrid a footkg:ClubTeam ;
+    rdfs:label "Real Madrid CF"@en ;
+    footkg:managedBy footres:Manager_CarloAncelotti .
+
+footres:Formation_4_4_2_LowBlock a footkg:Formation ;
+    rdfs:label "4-4-2 Compact Low Block"@en ;
+    footkg:leavesVulnerableZone footres:Zone8_MidCentral .
+
+footres:Manager_RogerSchmidt a footkg:Manager ;
+    rdfs:label "Roger Schmidt"@en ;
+    footkg:employsSystem footres:System_Gegenpressing ;
+    footkg:nationality "Germany"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_2_3_1 .
+
+footres:Player_BukayoSaka a footkg:Player ;
+    rdfs:label "Bukayo Saka"@en ;
+    footkg:age 23 ;
+    footkg:coachedBy footres:Manager_MikelArteta ;
+    footkg:hasChemistryWith footres:Player_DeclanRice,
+        footres:Player_JudeBellingham ;
+    footkg:inPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:marketValueEUR 140000000.0 ;
+    footkg:nationality "England"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:passCompletionPct "81.2"^^xsd:float ;
+    footkg:playerName "Bukayo Saka"^^xsd:string ;
+    footkg:playsFor footres:Club_Arsenal ;
+    footkg:preferredFoot "Left"^^xsd:string ;
+    footkg:pressuresPer90 "13.9"^^xsd:float ;
+    footkg:primaryRole footres:Role_TouchlineWinger ;
+    footkg:progressivePassesPer90 "5.6"^^xsd:float ;
+    footkg:xAPer90 "0.38"^^xsd:float ;
+    footkg:xGPer90 "0.45"^^xsd:float .
+
+footres:Player_JeremyDoku a footkg:Player ;
+    rdfs:label "Jeremy Doku"@en ;
+    footkg:age 22 ;
+    footkg:coachedBy footres:Manager_PepGuardiola ;
+    footkg:hasChemistryWith footres:Player_JohanBakayoko ;
+    footkg:inPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:marketValueEUR 65000000.0 ;
+    footkg:nationality "Belgium"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:passCompletionPct "84.5"^^xsd:float ;
+    footkg:playerName "Jeremy Doku"^^xsd:string ;
+    footkg:playsFor footres:Club_ManchesterCity ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "12.3"^^xsd:float ;
+    footkg:primaryRole footres:Role_TouchlineWinger ;
+    footkg:progressivePassesPer90 "4.1"^^xsd:float ;
+    footkg:xAPer90 "0.42"^^xsd:float ;
+    footkg:xGPer90 "0.28"^^xsd:float .
+
+footres:Role_AnchorMan a footkg:AnchorMan ;
+    rdfs:label "Anchor Man (Busquets Pivot)"@en ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral ;
+    footkg:synergizesWith footres:Role_DeepLyingPlaymaker .
+
+footres:Role_FalseNine a footkg:FalseNine ;
+    rdfs:label "False Nine"@en ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:outOfPossessionZone footres:Zone13_AttZone14 ;
+    footkg:synergizesWith footres:Role_InsideForward,
+        footres:Role_Raumdeuter .
+
+footres:Role_Mezzala a footkg:Mezzala ;
+    rdfs:label "Mezzala (Half-space Runner)"@en ;
+    footkg:inPossessionZone footres:Zone12_AttRightHalfSpace ;
+    footkg:outOfPossessionZone footres:Zone8_MidCentral ;
+    footkg:synergizesWith footres:Role_DeepLyingPlaymaker .
+
+footres:Role_OverlappingWingback a footkg:OverlappingWingback ;
+    rdfs:label "Overlapping Wingback"@en ;
+    footkg:inPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:outOfPossessionZone footres:Zone6_MidRightFlank ;
+    footkg:synergizesWith footres:Role_InsideForward .
+
+footres:Role_Raumdeuter a footkg:Raumdeuter ;
+    rdfs:label "Raumdeuter (Space Finder)"@en ;
+    footkg:inPossessionZone footres:Zone17_BoxCentral ;
+    footkg:outOfPossessionZone footres:Zone12_AttRightHalfSpace ;
+    footkg:synergizesWith footres:Role_FalseNine .
+
+footres:System_DirectVertical a footkg:DirectVertical ;
+    rdfs:label "Direct Vertical Play"@en .
+
+footres:System_Gegenpressing a footkg:Gegenpressing ;
+    rdfs:label "Gegenpressing"@en .
+
+footres:Zone10_MidLeftFlank a footkg:PitchZone,
+        footkg:WideChannel ;
+    rdfs:label "Middle Third Left Flank"@en ;
+    footkg:adjacentTo footres:Zone9_MidLeftHalfSpace ;
+    footkg:zoneDescription "Middle Third Left Flank"^^xsd:string .
+
+footres:Zone15_AttLeftFlank a footkg:PitchZone,
+        footkg:WideChannel ;
+    rdfs:label "Attacking Left Flank (Crossing Zone)"@en ;
+    footkg:adjacentTo footres:Zone14_AttLeftHalfSpace ;
+    footkg:zoneDescription "Attacking Left Flank (Crossing Zone)"^^xsd:string .
+
+footkg:TacticalConcept a owl:Class ;
+    rdfs:label "Tactical Concept"@en .
+
+footres:Club_Arsenal a footkg:ClubTeam ;
+    rdfs:label "Arsenal FC"@en ;
+    footkg:managedBy footres:Manager_MikelArteta .
+
+footres:Formation_4_2_3_1 a footkg:Formation ;
+    rdfs:label "4-2-3-1 Double Pivot"@en ;
+    footkg:exploitsWeaknessIn footres:Formation_4_4_2_LowBlock ;
+    footkg:leavesVulnerableZone footres:Zone13_AttZone14 ;
+    footkg:transitionsToInPossession footres:Formation_2_3_5_InPoss .
+
+footres:Manager_ArneSlot a footkg:Manager ;
+    rdfs:label "Arne Slot"@en ;
+    footkg:employsSystem footres:System_PositionalPlay ;
+    footkg:nationality "Netherlands"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_2_3_1 .
+
+footres:Manager_CarloAncelotti a footkg:Manager ;
+    rdfs:label "Carlo Ancelotti"@en ;
+    footkg:employsSystem footres:System_Relationism ;
+    footkg:nationality "Italy"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_2_3_1 .
+
+footres:Manager_DiegoSimeone a footkg:Manager ;
+    rdfs:label "Diego Simeone"@en ;
+    footkg:employsSystem footres:System_LowBlockCounter ;
+    footkg:nationality "Argentina"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_4_2_LowBlock .
+
+footres:Manager_OliverGlasner a footkg:Manager ;
+    rdfs:label "Oliver Glasner"@en ;
+    footkg:employsSystem footres:System_DirectVertical ;
+    footkg:nationality "Austria"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_3_5_2 .
+
+footres:Manager_SimoneInzaghi a footkg:Manager ;
+    rdfs:label "Simone Inzaghi"@en ;
+    footkg:employsSystem footres:System_DirectVertical ;
+    footkg:nationality "Italy"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_3_5_2 .
+
+footres:Manager_XabiAlonso a footkg:Manager ;
+    rdfs:label "Xabi Alonso"@en ;
+    footkg:employsSystem footres:System_PositionalPlay ;
+    footkg:nationality "Spain"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_3_5_2 .
+
+footres:Player_RicoLewis a footkg:Player ;
+    rdfs:label "Rico Lewis"@en ;
+    footkg:age 20 ;
+    footkg:coachedBy footres:Manager_PepGuardiola ;
+    footkg:hasChemistryWith footres:Player_OleksandrZinchenko,
+        footres:Player_Rodri ;
+    footkg:inPossessionZone footres:Zone7_MidRightHalfSpace ;
+    footkg:marketValueEUR 40000000.0 ;
+    footkg:nationality "England"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone2_DefRightHalfSpace ;
+    footkg:passCompletionPct "91.0"^^xsd:float ;
+    footkg:playerName "Rico Lewis"^^xsd:string ;
+    footkg:playsFor footres:Club_ManchesterCity ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "16.8"^^xsd:float ;
+    footkg:primaryRole footres:Role_InvertedFullback ;
+    footkg:progressivePassesPer90 "7.2"^^xsd:float ;
+    footkg:xAPer90 "0.14"^^xsd:float ;
+    footkg:xGPer90 "0.08"^^xsd:float .
+
+footres:Role_BoxToBoxMidfielder a footkg:BoxToBoxMidfielder ;
+    rdfs:label "Box-to-Box Midfielder"@en ;
+    footkg:inPossessionZone footres:Zone13_AttZone14 ;
+    footkg:outOfPossessionZone footres:Zone8_MidCentral ;
+    footkg:synergizesWith footres:Role_DeepLyingPlaymaker .
+
+footres:Zone17_BoxCentral a footkg:CentralCorridor,
+        footkg:PitchZone ;
+    rdfs:label "Opponent Penalty Spot (Golden Zone)"@en ;
+    footkg:zoneDescription "Opponent Penalty Spot (Golden Zone)"^^xsd:string .
+
+footres:Zone1_DefRightFlank a footkg:PitchZone,
+        footkg:WideChannel ;
+    rdfs:label "Defensive Right Flank"@en ;
+    footkg:adjacentTo footres:Zone2_DefRightHalfSpace ;
+    footkg:zoneDescription "Defensive Right Flank"^^xsd:string .
+
+footres:Zone5_DefLeftFlank a footkg:PitchZone,
+        footkg:WideChannel ;
+    rdfs:label "Defensive Left Flank"@en ;
+    footkg:adjacentTo footres:Zone4_DefLeftHalfSpace ;
+    footkg:zoneDescription "Defensive Left Flank"^^xsd:string .
+
+footkg:AttackingRole a owl:Class ;
+    rdfs:label "Attacking Tactical Role"@en ;
+    rdfs:subClassOf footkg:TacticalRole .
+
+footkg:MidfieldRole a owl:Class ;
+    rdfs:label "Midfield Tactical Role"@en ;
+    rdfs:subClassOf footkg:TacticalRole .
+
+footkg:Person a owl:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:subClassOf footkg:Agent .
+
+footkg:WideRole a owl:Class ;
+    rdfs:label "Wide Tactical Role"@en ;
+    rdfs:subClassOf footkg:TacticalRole .
+
+footres:Formation_3_5_2 a footkg:Formation ;
+    rdfs:label "3-5-2 Wingback Structure"@en ;
+    footkg:leavesVulnerableZone footres:Zone10_MidLeftFlank,
+        footres:Zone6_MidRightFlank ;
+    footkg:transitionsToInPossession footres:Formation_3_1_4_2_InPoss .
+
+footres:Formation_4_3_3 a footkg:Formation ;
+    rdfs:label "Base 4-3-3"@en ;
+    footkg:exploitsWeaknessIn footres:Formation_3_5_2 ;
+    footkg:leavesVulnerableZone footres:Zone1_DefRightFlank,
+        footres:Zone5_DefLeftFlank ;
+    footkg:transitionsToInPossession footres:Formation_3_2_5_InPoss .
+
+footres:Manager_MikelArteta a footkg:Manager ;
+    rdfs:label "Mikel Arteta"@en ;
+    footkg:employsSystem footres:System_PositionalPlay ;
+    footkg:nationality "Spain"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_3_3 .
+
+footres:Player_Rodri a footkg:Player ;
+    rdfs:label "Rodri Hernandez"@en ;
+    footkg:age 28 ;
+    footkg:coachedBy footres:Manager_DiegoSimeone,
+        footres:Manager_PepGuardiola ;
+    footkg:formerlyPlayedFor footres:Club_AtleticoMadrid ;
+    footkg:hasChemistryWith footres:Player_AlanVarela,
+        footres:Player_RicoLewis ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:marketValueEUR 130000000.0 ;
+    footkg:nationality "Spain"^^xsd:string ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral ;
+    footkg:passCompletionPct "92.4"^^xsd:float ;
+    footkg:playerName "Rodri Hernandez"^^xsd:string ;
+    footkg:playsFor footres:Club_ManchesterCity ;
+    footkg:preferredFoot "Right"^^xsd:string ;
+    footkg:pressuresPer90 "14.5"^^xsd:float ;
+    footkg:primaryRole footres:Role_DeepLyingPlaymaker ;
+    footkg:progressivePassesPer90 "8.8"^^xsd:float ;
+    footkg:xAPer90 "0.18"^^xsd:float ;
+    footkg:xGPer90 "0.15"^^xsd:float .
+
+footres:Role_InsideForward a footkg:InsideForward ;
+    rdfs:label "Inside Forward"@en ;
+    footkg:inPossessionZone footres:Zone13_AttZone14 ;
+    footkg:outOfPossessionZone footres:Zone14_AttLeftHalfSpace ;
+    footkg:synergizesWith footres:Role_FalseNine,
+        footres:Role_OverlappingWingback .
+
+footres:Role_InvertedFullback a footkg:InvertedFullback ;
+    rdfs:label "Inverted Fullback"@en ;
+    footkg:inPossessionZone footres:Zone7_MidRightHalfSpace ;
+    footkg:outOfPossessionZone footres:Zone2_DefRightHalfSpace ;
+    footkg:synergizesWith footres:Role_TouchlineWinger .
+
+footres:Role_TouchlineWinger a footkg:TouchlineWinger ;
+    rdfs:label "Touchline Winger"@en ;
+    footkg:inPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:outOfPossessionZone footres:Zone11_AttRightFlank ;
+    footkg:synergizesWith footres:Role_InvertedFullback .
+
+footres:System_PositionalPlay a footkg:PositionalPlay ;
+    rdfs:label "Positional Play"@en .
+
+footres:Zone2_DefRightHalfSpace a footkg:HalfSpace,
+        footkg:PitchZone ;
+    rdfs:label "Defensive Right Half-Space"@en ;
+    footkg:adjacentTo footres:Zone1_DefRightFlank,
+        footres:Zone3_DefCentral ;
+    footkg:zoneDescription "Defensive Right Half-Space"^^xsd:string .
+
+footres:Zone6_MidRightFlank a footkg:PitchZone,
+        footkg:WideChannel ;
+    rdfs:label "Middle Third Right Flank"@en ;
+    footkg:adjacentTo footres:Zone7_MidRightHalfSpace ;
+    footkg:zoneDescription "Middle Third Right Flank"^^xsd:string .
+
+footres:Club_ManchesterCity a footkg:ClubTeam ;
+    rdfs:label "Manchester City FC"@en ;
+    footkg:managedBy footres:Manager_PepGuardiola .
+
+footres:Zone4_DefLeftHalfSpace a footkg:HalfSpace,
+        footkg:PitchZone ;
+    rdfs:label "Defensive Left Half-Space"@en ;
+    footkg:adjacentTo footres:Zone3_DefCentral,
+        footres:Zone5_DefLeftFlank ;
+    footkg:zoneDescription "Defensive Left Half-Space"^^xsd:string .
+
+footres:Zone9_MidLeftHalfSpace a footkg:HalfSpace,
+        footkg:PitchZone ;
+    rdfs:label "Middle Third Left Half-Space"@en ;
+    footkg:adjacentTo footres:Zone10_MidLeftFlank,
+        footres:Zone14_AttLeftHalfSpace,
+        footres:Zone8_MidCentral ;
+    footkg:zoneDescription "Middle Third Left Half-Space"^^xsd:string .
+
+footkg:CentralCorridor a owl:Class ;
+    rdfs:label "Central Corridor"@en ;
+    rdfs:subClassOf footkg:SpatialZone .
+
+footkg:HalfSpace a owl:Class ;
+    rdfs:label "Tactical Half-Space"@en ;
+    rdfs:subClassOf footkg:SpatialZone .
+
+footkg:WideChannel a owl:Class ;
+    rdfs:label "Wide Channel / Flank"@en ;
+    rdfs:subClassOf footkg:SpatialZone .
+
+footres:Role_DeepLyingPlaymaker a footkg:DeepLyingPlaymaker ;
+    rdfs:label "Deep-Lying Playmaker (Regista)"@en ;
+    footkg:inPossessionZone footres:Zone8_MidCentral ;
+    footkg:outOfPossessionZone footres:Zone3_DefCentral ;
+    footkg:synergizesWith footres:Role_AnchorMan,
+        footres:Role_BoxToBoxMidfielder,
+        footres:Role_Mezzala .
+
+footres:Zone12_AttRightHalfSpace a footkg:HalfSpace,
+        footkg:PitchZone ;
+    rdfs:label "Attacking Right Half-Space"@en ;
+    footkg:adjacentTo footres:Zone11_AttRightFlank,
+        footres:Zone13_AttZone14,
+        footres:Zone7_MidRightHalfSpace ;
+    footkg:zoneDescription "Attacking Right Half-Space"^^xsd:string .
+
+footres:Zone14_AttLeftHalfSpace a footkg:HalfSpace,
+        footkg:PitchZone ;
+    rdfs:label "Attacking Left Half-Space"@en ;
+    footkg:adjacentTo footres:Zone13_AttZone14,
+        footres:Zone15_AttLeftFlank,
+        footres:Zone9_MidLeftHalfSpace ;
+    footkg:zoneDescription "Attacking Left Half-Space"^^xsd:string .
+
+footkg:MatchEvent a owl:Class ;
+    rdfs:label "Match Event (StatsBomb aligned)"@en .
+
+footkg:TacticalSystem a owl:Class ;
+    rdfs:label "Tactical System / Philosophy"@en ;
+    rdfs:subClassOf footkg:TacticalConcept .
+
+footkg:Team a owl:Class ;
+    rdfs:label "Football Team"@en ;
+    rdfs:subClassOf footkg:Agent .
+
+footkg:TacticalRole a owl:Class ;
+    rdfs:label "Tactical Role"@en ;
+    rdfs:comment "Functional player archetype distinct from formal pitch position."@en ;
+    rdfs:subClassOf footkg:TacticalConcept .
+
+footres:Manager_PepGuardiola a footkg:Manager ;
+    rdfs:label "Pep Guardiola"@en ;
+    footkg:employsSystem footres:System_PositionalPlay ;
+    footkg:nationality "Spain"^^xsd:string ;
+    footkg:utilizesFormation footres:Formation_4_3_3 .
+
+footres:Zone7_MidRightHalfSpace a footkg:HalfSpace,
+        footkg:PitchZone ;
+    rdfs:label "Middle Third Right Half-Space"@en ;
+    footkg:adjacentTo footres:Zone12_AttRightHalfSpace,
+        footres:Zone6_MidRightFlank,
+        footres:Zone8_MidCentral ;
+    footkg:zoneDescription "Middle Third Right Half-Space"^^xsd:string .
+
+footkg:SpatialZone a owl:Class ;
+    rdfs:label "Spatial Pitch Area"@en .
+
+footres:Zone3_DefCentral a footkg:CentralCorridor,
+        footkg:PitchZone ;
+    rdfs:label "Defensive Central Box (Penalty Area)"@en ;
+    footkg:adjacentTo footres:Zone2_DefRightHalfSpace,
+        footres:Zone4_DefLeftHalfSpace ;
+    footkg:zoneDescription "Defensive Central Box (Penalty Area)"^^xsd:string .
+
+footkg:ClubTeam a owl:Class ;
+    rdfs:label "Club Team"@en ;
+    rdfs:subClassOf footkg:Team .
+
+footkg:Formation a owl:Class ;
+    rdfs:label "Formation Structure"@en ;
+    rdfs:subClassOf footkg:TacticalConcept .
+
+footres:Zone13_AttZone14 a footkg:CentralCorridor,
+        footkg:PitchZone ;
+    rdfs:label "Zone 14 (Central Edge of Opponent Box)"@en ;
+    footkg:adjacentTo footres:Zone12_AttRightHalfSpace,
+        footres:Zone14_AttLeftHalfSpace,
+        footres:Zone8_MidCentral ;
+    footkg:zoneDescription "Zone 14 (Central Edge of Opponent Box)"^^xsd:string .
+
+footkg:Manager a owl:Class ;
+    rdfs:label "Manager / Head Coach"@en ;
+    rdfs:comment "Head coach or tactical manager of a football team."@en ;
+    rdfs:subClassOf footkg:Person .
+
+footres:Zone11_AttRightFlank a footkg:PitchZone,
+        footkg:WideChannel ;
+    rdfs:label "Attacking Right Flank (Crossing Zone)"@en ;
+    footkg:adjacentTo footres:Zone12_AttRightHalfSpace ;
+    footkg:zoneDescription "Attacking Right Flank (Crossing Zone)"^^xsd:string .
+
+footkg:PitchZone a owl:Class ;
+    rdfs:label "Standard Pitch Zone (1-18 grid)"@en ;
+    rdfs:subClassOf footkg:SpatialZone .
+
+footres:Zone8_MidCentral a footkg:CentralCorridor,
+        footkg:PitchZone ;
+    rdfs:label "Central Midfield Circle"@en ;
+    footkg:adjacentTo footres:Zone13_AttZone14,
+        footres:Zone7_MidRightHalfSpace,
+        footres:Zone9_MidLeftHalfSpace ;
+    footkg:zoneDescription "Central Midfield Circle"^^xsd:string .
+
+footkg:Player a owl:Class ;
+    rdfs:label "Football Player"@en ;
+    rdfs:comment "An active or historical association football player."@en ;
+    rdfs:subClassOf footkg:Person .
+

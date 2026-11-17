@@ -1,0 +1,367 @@
+@prefix footkg: <http://tib.eu/footkg/ontology#> .
+@prefix footres: <http://tib.eu/footkg/resource/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+
+<http://tib.eu/footkg/ontology> a owl:Ontology ;
+    rdfs:label "FootKG: Tactical Football & Scouting Ontology"@en ;
+    rdfs:comment "An ontology for multi-hop tactical reasoning, player role taxonomy, spatial pitch dynamics, and intelligent scouting."@en ;
+    owl:versionInfo "1.0.0" .
+
+#################################################################
+#    Classes
+#################################################################
+
+footkg:Agent a owl:Class ;
+    rdfs:label "Agent"@en .
+
+footkg:Person a owl:Class ;
+    rdfs:subClassOf footkg:Agent ;
+    rdfs:label "Person"@en .
+
+footkg:Player a owl:Class ;
+    rdfs:subClassOf footkg:Person ;
+    rdfs:label "Football Player"@en ;
+    rdfs:comment "An active or historical association football player."@en .
+
+footkg:Manager a owl:Class ;
+    rdfs:subClassOf footkg:Person ;
+    rdfs:label "Manager / Head Coach"@en ;
+    rdfs:comment "Head coach or tactical manager of a football team."@en .
+
+footkg:Team a owl:Class ;
+    rdfs:subClassOf footkg:Agent ;
+    rdfs:label "Football Team"@en .
+
+footkg:ClubTeam a owl:Class ;
+    rdfs:subClassOf footkg:Team ;
+    rdfs:label "Club Team"@en .
+
+footkg:NationalTeam a owl:Class ;
+    rdfs:subClassOf footkg:Team ;
+    rdfs:label "National Team"@en .
+
+footkg:Competition a owl:Class ;
+    rdfs:label "Football Competition"@en .
+
+# --- Tactical Concept Layer ---
+
+footkg:TacticalConcept a owl:Class ;
+    rdfs:label "Tactical Concept"@en .
+
+footkg:TacticalSystem a owl:Class ;
+    rdfs:subClassOf footkg:TacticalConcept ;
+    rdfs:label "Tactical System / Philosophy"@en .
+
+footkg:PositionalPlay a owl:Class ;
+    rdfs:subClassOf footkg:TacticalSystem ;
+    rdfs:label "Positional Play (Juego de Posicion)"@en .
+
+footkg:Gegenpressing a owl:Class ;
+    rdfs:subClassOf footkg:TacticalSystem ;
+    rdfs:label "Gegenpressing (Counter-pressing)"@en .
+
+footkg:LowBlockCounter a owl:Class ;
+    rdfs:subClassOf footkg:TacticalSystem ;
+    rdfs:label "Low-Block Counter-Attack"@en .
+
+footkg:Relationism a owl:Class ;
+    rdfs:subClassOf footkg:TacticalSystem ;
+    rdfs:label "Relationism (Appariement)"@en .
+
+footkg:DirectVertical a owl:Class ;
+    rdfs:subClassOf footkg:TacticalSystem ;
+    rdfs:label "Direct Vertical Transition"@en .
+
+footkg:Formation a owl:Class ;
+    rdfs:subClassOf footkg:TacticalConcept ;
+    rdfs:label "Formation Structure"@en .
+
+# --- Tactical Roles ---
+
+footkg:TacticalRole a owl:Class ;
+    rdfs:subClassOf footkg:TacticalConcept ;
+    rdfs:label "Tactical Role"@en ;
+    rdfs:comment "Functional player archetype distinct from formal pitch position."@en .
+
+footkg:DefensiveRole a owl:Class ;
+    rdfs:subClassOf footkg:TacticalRole ;
+    rdfs:label "Defensive Tactical Role"@en .
+
+footkg:BallPlayingDefender a owl:Class ;
+    rdfs:subClassOf footkg:DefensiveRole ;
+    rdfs:label "Ball-Playing Central Defender"@en .
+
+footkg:SweeperKeeper a owl:Class ;
+    rdfs:subClassOf footkg:DefensiveRole ;
+    rdfs:label "Sweeper Keeper"@en .
+
+footkg:WideRole a owl:Class ;
+    rdfs:subClassOf footkg:TacticalRole ;
+    rdfs:label "Wide Tactical Role"@en .
+
+footkg:InvertedFullback a owl:Class ;
+    rdfs:subClassOf footkg:WideRole ;
+    rdfs:label "Inverted Fullback"@en .
+
+footkg:OverlappingWingback a owl:Class ;
+    rdfs:subClassOf footkg:WideRole ;
+    rdfs:label "Overlapping Wingback"@en .
+
+footkg:TouchlineWinger a owl:Class ;
+    rdfs:subClassOf footkg:WideRole ;
+    rdfs:label "Touchline Winger"@en .
+
+footkg:InsideForward a owl:Class ;
+    rdfs:subClassOf footkg:WideRole ;
+    rdfs:label "Inside Forward"@en .
+
+footkg:MidfieldRole a owl:Class ;
+    rdfs:subClassOf footkg:TacticalRole ;
+    rdfs:label "Midfield Tactical Role"@en .
+
+footkg:DeepLyingPlaymaker a owl:Class ;
+    rdfs:subClassOf footkg:MidfieldRole ;
+    rdfs:label "Deep-Lying Playmaker (Regista)"@en .
+
+footkg:BoxToBoxMidfielder a owl:Class ;
+    rdfs:subClassOf footkg:MidfieldRole ;
+    rdfs:label "Box-to-Box Midfielder"@en .
+
+footkg:Mezzala a owl:Class ;
+    rdfs:subClassOf footkg:MidfieldRole ;
+    rdfs:label "Mezzala (Half-space Midfielder)"@en .
+
+footkg:AnchorMan a owl:Class ;
+    rdfs:subClassOf footkg:MidfieldRole ;
+    rdfs:label "Anchor Man / Pivot (Busquets archetype)"@en .
+
+footkg:AttackingRole a owl:Class ;
+    rdfs:subClassOf footkg:TacticalRole ;
+    rdfs:label "Attacking Tactical Role"@en .
+
+footkg:Raumdeuter a owl:Class ;
+    rdfs:subClassOf footkg:AttackingRole ;
+    rdfs:label "Raumdeuter (Space Investigator)"@en .
+
+footkg:FalseNine a owl:Class ;
+    rdfs:subClassOf footkg:AttackingRole ;
+    rdfs:label "False Nine"@en .
+
+footkg:TargetMan a owl:Class ;
+    rdfs:subClassOf footkg:AttackingRole ;
+    rdfs:label "Target Man"@en .
+
+footkg:PressingForward a owl:Class ;
+    rdfs:subClassOf footkg:AttackingRole ;
+    rdfs:label "Pressing Forward"@en .
+
+# --- Spatial Layer ---
+
+footkg:SpatialZone a owl:Class ;
+    rdfs:label "Spatial Pitch Area"@en .
+
+footkg:PitchZone a owl:Class ;
+    rdfs:subClassOf footkg:SpatialZone ;
+    rdfs:label "Standard Pitch Zone (1-18 grid)"@en .
+
+footkg:HalfSpace a owl:Class ;
+    rdfs:subClassOf footkg:SpatialZone ;
+    rdfs:label "Tactical Half-Space"@en .
+
+footkg:WideChannel a owl:Class ;
+    rdfs:subClassOf footkg:SpatialZone ;
+    rdfs:label "Wide Channel / Flank"@en .
+
+footkg:CentralCorridor a owl:Class ;
+    rdfs:subClassOf footkg:SpatialZone ;
+    rdfs:label "Central Corridor"@en .
+
+# --- Match & Events ---
+
+footkg:Match a owl:Class ;
+    rdfs:label "Football Match"@en .
+
+footkg:MatchEvent a owl:Class ;
+    rdfs:label "Match Event (StatsBomb aligned)"@en .
+
+footkg:Pass a owl:Class ;
+    rdfs:subClassOf footkg:MatchEvent ;
+    rdfs:label "Pass Event"@en .
+
+footkg:ProgressivePass a owl:Class ;
+    rdfs:subClassOf footkg:Pass ;
+    rdfs:label "Progressive Pass"@en .
+
+footkg:DefensiveAction a owl:Class ;
+    rdfs:subClassOf footkg:MatchEvent ;
+    rdfs:label "Defensive Action"@en .
+
+footkg:Pressure a owl:Class ;
+    rdfs:subClassOf footkg:DefensiveAction ;
+    rdfs:label "Pressure Action"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+footkg:playsFor a owl:ObjectProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Team ;
+    rdfs:label "plays for team"@en .
+
+footkg:managedBy a owl:ObjectProperty ;
+    rdfs:domain footkg:Team ;
+    rdfs:range footkg:Manager ;
+    rdfs:label "managed by"@en .
+
+footkg:coachedBy a owl:ObjectProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Manager ;
+    rdfs:label "has been coached by"@en .
+
+footkg:playsRole a owl:ObjectProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:TacticalRole ;
+    rdfs:label "fulfills tactical role"@en .
+
+footkg:primaryRole a owl:ObjectProperty ;
+    rdfs:subPropertyOf footkg:playsRole ;
+    rdfs:label "primary tactical role"@en .
+
+footkg:secondaryRole a owl:ObjectProperty ;
+    rdfs:subPropertyOf footkg:playsRole ;
+    rdfs:label "secondary tactical role"@en .
+
+footkg:employsSystem a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (footkg:Manager footkg:Team) ] ;
+    rdfs:range footkg:TacticalSystem ;
+    rdfs:label "employs tactical system"@en .
+
+footkg:utilizesFormation a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (footkg:Team footkg:TacticalSystem) ] ;
+    rdfs:range footkg:Formation ;
+    rdfs:label "utilizes formation"@en .
+
+footkg:transitionsToInPossession a owl:ObjectProperty ;
+    rdfs:domain footkg:Formation ;
+    rdfs:range footkg:Formation ;
+    rdfs:label "transitions in possession to"@en .
+
+footkg:operatesInZone a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ; owl:unionOf (footkg:Player footkg:TacticalRole) ] ;
+    rdfs:range footkg:SpatialZone ;
+    rdfs:label "operates in spatial zone"@en .
+
+footkg:inPossessionZone a owl:ObjectProperty ;
+    rdfs:subPropertyOf footkg:operatesInZone ;
+    rdfs:label "operates in zone when in possession"@en .
+
+footkg:outOfPossessionZone a owl:ObjectProperty ;
+    rdfs:subPropertyOf footkg:operatesInZone ;
+    rdfs:label "operates in zone when out of possession"@en .
+
+footkg:synergizesWith a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain footkg:TacticalRole ;
+    rdfs:range footkg:TacticalRole ;
+    rdfs:label "synergizes tactically with"@en .
+
+footkg:exploitsWeaknessIn a owl:ObjectProperty ;
+    rdfs:domain footkg:Formation ;
+    rdfs:range footkg:Formation ;
+    rdfs:label "exploits structural weakness in"@en .
+
+footkg:leavesVulnerableZone a owl:ObjectProperty ;
+    rdfs:domain footkg:Formation ;
+    rdfs:range footkg:SpatialZone ;
+    rdfs:label "leaves zone vulnerable during transition"@en .
+
+footkg:adjacentTo a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain footkg:SpatialZone ;
+    rdfs:range footkg:SpatialZone ;
+    rdfs:label "is spatially adjacent to"@en .
+
+footkg:hasChemistryWith a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Player ;
+    rdfs:label "shares high team chemistry with"@en .
+
+footkg:formerlyPlayedFor a owl:ObjectProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range footkg:Team ;
+    rdfs:label "formerly played for"@en .
+
+footkg:performedBy a owl:ObjectProperty ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:Player ;
+    rdfs:label "performed by player"@en .
+
+footkg:originatesInZone a owl:ObjectProperty ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:SpatialZone ;
+    rdfs:label "originates in zone"@en .
+
+footkg:terminatesInZone a owl:ObjectProperty ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:SpatialZone ;
+    rdfs:label "terminates in zone"@en .
+
+footkg:directlyPrecedes a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:domain footkg:MatchEvent ;
+    rdfs:range footkg:MatchEvent ;
+    rdfs:label "directly precedes event in chain"@en .
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+footkg:playerName a owl:DatatypeProperty ;
+    rdfs:domain footkg:Person ;
+    rdfs:range xsd:string .
+
+footkg:age a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:integer .
+
+footkg:nationality a owl:DatatypeProperty ;
+    rdfs:domain footkg:Person ;
+    rdfs:range xsd:string .
+
+footkg:preferredFoot a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:string .
+
+footkg:marketValueEUR a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:decimal .
+
+footkg:contractUntil a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:gYear .
+
+footkg:progressivePassesPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:pressuresPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:xGPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:xAPer90 a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:passCompletionPct a owl:DatatypeProperty ;
+    rdfs:domain footkg:Player ;
+    rdfs:range xsd:float .
+
+footkg:zoneDescription a owl:DatatypeProperty ;
+    rdfs:domain footkg:SpatialZone ;
+    rdfs:range xsd:string .

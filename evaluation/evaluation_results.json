@@ -1,0 +1,58 @@
+{
+  "total": 20,
+  "passed": 20,
+  "accuracy_pct": 100.0,
+  "avg_latency_ms": 6.85,
+  "category_stats": {
+    "Player Replacement": {
+      "passed": 3,
+      "total": 3,
+      "avg_latency_ms": 23.63
+    },
+    "Coach Lineage": {
+      "passed": 3,
+      "total": 3,
+      "avg_latency_ms": 2.21
+    },
+    "Tactical Counter": {
+      "passed": 3,
+      "total": 3,
+      "avg_latency_ms": 5.9
+    },
+    "Chemistry & Synergy": {
+      "passed": 2,
+      "total": 2,
+      "avg_latency_ms": 11.64
+    },
+    "Role Synergy": {
+      "passed": 2,
+      "total": 2,
+      "avg_latency_ms": 0.73
+    },
+    "Spatial Analysis": {
+      "passed": 2,
+      "total": 2,
+      "avg_latency_ms": 3.24
+    },
+    "Statistical Threshold": {
+      "passed": 2,
+      "total": 2,
+      "avg_latency_ms": 1.99
+    },
+    "Transitive Event Chains": {
+      "passed": 1,
+      "total": 1,
+      "avg_latency_ms": 1.42
+    },
+    "Scouting Affordability": {
+      "passed": 1,
+      "total": 1,
+      "avg_latency_ms": 2.85
+    },
+    "System Subsumption": {
+      "passed": 1,
+      "total": 1,
+      "avg_latency_ms": 2.24
+    }
+  }
+}

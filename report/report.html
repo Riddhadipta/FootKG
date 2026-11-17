@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 18mm 20mm 18mm;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.5;
+    font-size: 10.5pt;
+  }
+  h1 { font-size: 20pt; color: #0d47a1; margin-bottom: 4px; }
+  .subtitle { font-size: 11pt; color: #555; margin-bottom: 20px; font-weight: 500; }
+  .meta-box { background: #f0f4f8; border-left: 4px solid #1976d2; padding: 10px 14px; margin-bottom: 24px; font-size: 9.5pt; }
+  h2 { font-size: 13pt; color: #1565c0; border-bottom: 1.5px solid #e0e0e0; padding-bottom: 4px; margin-top: 20px; }
+  h3 { font-size: 11pt; color: #2e7d32; margin-top: 14px; margin-bottom: 4px; }
+  p { margin: 6px 0; text-align: justify; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 9pt; }
+  th, td { border: 1px solid #cfd8dc; padding: 6px 8px; text-align: left; }
+  th { background-color: #f5f5f5; color: #37474f; font-weight: 600; }
+  tr:nth-child(even) { background-color: #fafafa; }
+  code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 8.5pt; background: #eceff1; border-radius: 3px; }
+  code { padding: 1px 4px; }
+  pre { padding: 10px; overflow-x: auto; border: 1px solid #cfd8dc; margin: 10px 0; line-height: 1.35; }
+  .page-break { page-break-before: always; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .badge { display: inline-block; padding: 2px 6px; font-size: 8pt; font-weight: bold; border-radius: 3px; background: #e8f5e9; color: #2e7d32; }
+</style>
+</head>
+<body>
+
+<h1>FootKG: A Graph-Native Knowledge Graph for Tactical Reasoning and Intelligent Player Scouting</h1>
+<div class="subtitle">Bonus Project Final Report • Creation and Application of Knowledge Graphs (WS26/27)</div>
+
+<div class="meta-box">
+  <strong>Institution:</strong> Leibniz University Hannover • L3S Research Center • TIB<br>
+  <strong>Author:</strong> Riddhadipta Nath &bull; <strong>Submission Recipient:</strong> xinyue.gong@l3s.de<br>
+  <strong>Ontology Namespace:</strong> <code>http://tib.eu/footkg/ontology#</code> &bull; <strong>Resource:</strong> <code>http://tib.eu/footkg/resource/</code><br>
+  <strong>Repository / Code Access:</strong> Included in workspace package with interactive Streamlit UI and automated benchmark harness.
+</div>
+
+<h2>1. Introduction</h2>
+<h3>1.1 Motivation & Problem Statement</h3>
+<p>
+Modern association football analytics relies heavily on two dominant technical paradigms: isolated tabular aggregates (such as goals, passing volume, and expected goals) and opaque high-dimensional vector embeddings. While these methods measure gross output, they are fundamentally inadequate for representing the relational, topological, and systemic dynamics of high-level football. In contemporary football, a player's efficacy is rarely an intrinsic scalar constant; it is strongly governed by:
+</p>
+<ul>
+  <li><strong>Positional Synergy:</strong> How tactical pairings operate in tandem (e.g., an <em>Inverted Fullback</em> vacating the flank to overload midfield while a <em>Touchline Winger</em> isolates the opposing defender in wide channels).</li>
+  <li><strong>Multi-Hop Lineage Scouting:</strong> Conventional SQL databases cannot naturally resolve compositional multi-hop queries such as: <em>"Find an under-24 midfielder under &euro;35M who played under a coach employing Positional Play, occupies the central-halfspace corridor, and mirrors Rodri's progressive passing output."</em></li>
+  <li><strong>Dynamic In-Possession Transitions:</strong> Teams continuously morph their geometric shapes between offensive and defensive phases (e.g., base 4-3-3 morphing into a 3-2-5 in possession). These spatial shifts leave predictable structural vulnerabilities in defensive transitions that can be logically inferred and countered.</li>
+</ul>
+
+<h3>1.2 The Real Role of the Knowledge Graph</h3>
+<p>
+<code>FootKG</code> leverages the formal semantics of <strong>OWL 2 DL</strong> and <strong>SPARQL</strong> to model football as an interconnected ontological graph. The Knowledge Graph plays an irreplaceable, operational role in:
+</p>
+<ul>
+  <li><strong>Ontological Subsumption:</strong> Automatically inferring tactical archetypes via <code>rdfs:subClassOf*</code> (e.g., querying abstract <code>MidfieldRole</code> seamlessly retrieves <code>DeepLyingPlaymaker</code>, <code>BoxToBoxMidfielder</code>, and <code>Mezzala</code> without hardcoded enumerations).</li>
+  <li><strong>Multi-Hop Career & Lineage Traversal:</strong> Traversing complex graph paths linking players, past clubs, managers, and tactical systems without expensive recursive SQL CTE joins.</li>
+  <li><strong>Transitive Possession Chains:</strong> Utilizing SPARQL 1.1 property paths (<code>footkg:directlyPrecedes+</code>) to trace unbroken multi-event sequences from defensive recoveries into goalscoring zones.</li>
+  <li><strong>Symmetric Synergy & Chemistry:</strong> Modeling mutual bidirectional chemistry links (<code>owl:SymmetricProperty</code>) across club, national, and tactical pairings.</li>
+</ul>
+
+<h2>2. Knowledge Graph & Ontology Design</h2>
+<h3>2.1 Data Ingestion, Construction & Validation</h3>
+<p>
+The knowledge graph was constructed using an RDFLib pipeline in Python, producing <strong>895 verified triples</strong> serialized in Turtle format. The dataset models elite European clubs (Manchester City, Arsenal, Bayer Leverkusen, Real Madrid, Atletico Madrid, etc.), premier managers (Pep Guardiola, Mikel Arteta, Xabi Alonso, Carlo Ancelotti), tactical systems (Positional Play, Gegenpressing, Low-Block Counter), and players characterized by granular event metrics (progressive passes/90, pressures/90, expected threat xT, market value, age, and preferred foot). The pitch space was discretized into an 18-zone tactical grid coupled with specialized corridors (Half-Spaces, Wide Channels, Central Corridor, Zone 14) connected via symmetric <code>adjacentTo</code> properties.
+</p>
+
+<h3>2.2 Ontology Architecture & Class Taxonomy</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Superclass</th>
+      <th>Classes / Subclasses</th>
+      <th>Domain Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>footkg:Agent</code></td>
+      <td><code>footkg:Person</code>, <code>footkg:Team</code>, <code>footkg:ClubTeam</code>, <code>footkg:NationalTeam</code></td>
+      <td>Entities participating in the sporting ecosystem.</td>
+    </tr>
+    <tr>
+      <td><code>footkg:Person</code></td>
+      <td><code>footkg:Player</code>, <code>footkg:Manager</code></td>
+      <td>Individuals with career records, tactical systems, and nationalities.</td>
+    </tr>
+    <tr>
+      <td><code>footkg:TacticalConcept</code></td>
+      <td><code>TacticalSystem</code> (PositionalPlay, Gegenpress, LowBlock, Relationism), <code>Formation</code></td>
+      <td>High-level strategic philosophies and structural base shapes.</td>
+    </tr>
+    <tr>
+      <td><code>footkg:TacticalRole</code></td>
+      <td><code>DefensiveRole</code>, <code>WideRole</code> (InvertedFullback, TouchlineWinger), <code>MidfieldRole</code> (DeepLyingPlaymaker, Mezzala), <code>AttackingRole</code> (Raumdeuter, FalseNine)</td>
+      <td>Functional behavioral archetypes distinct from formal pitch positions.</td>
+    </tr>
+    <tr>
+      <td><code>footkg:SpatialZone</code></td>
+      <td><code>PitchZone</code> (Zones 1-18), <code>HalfSpace</code>, <code>WideChannel</code>, <code>CentralCorridor</code></td>
+      <td>Topological pitch partition model with symmetric adjacency links.</td>
+    </tr>
+    <tr>
+      <td><code>footkg:MatchEvent</code></td>
+      <td><code>Pass</code>, <code>ProgressivePass</code>, <code>Pressure</code>, <code>BallRecovery</code>, <code>Shot</code></td>
+      <td>Atomic match events aligned with StatsBomb spatial schemas.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h3>2.3 Property Hierarchy & Axioms</h3>
+<pre>
+# Selected Core Axioms from footkg_ontology.ttl
+footkg:playsRole a owl:ObjectProperty ; rdfs:domain footkg:Player ; rdfs:range footkg:TacticalRole .
+footkg:primaryRole rdfs:subPropertyOf footkg:playsRole .
+footkg:synergizesWith a owl:ObjectProperty, owl:SymmetricProperty ; rdfs:domain footkg:TacticalRole ; rdfs:range footkg:TacticalRole .
+footkg:hasChemistryWith a owl:ObjectProperty, owl:SymmetricProperty ; rdfs:domain footkg:Player ; rdfs:range footkg:Player .
+footkg:directlyPrecedes a owl:ObjectProperty, owl:TransitiveProperty ; rdfs:domain footkg:MatchEvent ; rdfs:range footkg:MatchEvent .
+footkg:exploitsWeaknessIn a owl:ObjectProperty ; rdfs:domain footkg:Formation ; rdfs:range footkg:Formation .
+footkg:leavesVulnerableZone a owl:ObjectProperty ; rdfs:domain footkg:Formation ; rdfs:range footkg:SpatialZone .
+</pre>
+
+<h2>3. Application Architecture & Implementation</h2>
+<h3>3.1 System Components & Workflow</h3>
+<p>
+The application is structured into four modular Python engines operating over an in-memory RDFLib triplestore, surfaced through an interactive Streamlit UI:
+</p>
+<ul>
+  <li><strong>FootKGEngine (Core Store):</strong> Loads <code>footkg_triples.ttl</code>, manages SPARQL query caching, and profiles query execution latency down to sub-millisecond precision.</li>
+  <li><strong>FootKGScout (Replacement Finder):</strong> Given a target player, evaluates candidate players across role taxonomy equivalence, in-possession and out-of-possession zone overlap, age and budget constraints, and managerial system lineages (e.g., verifying whether a candidate previously played under a coach employing <em>Positional Play</em>). Computes a multi-factor <strong>Tactical Fit Score</strong> (0–100%).</li>
+  <li><strong>FootKGTactics (Counter-Strategy Analyzer):</strong> Queries the opponent's manager, base formation, and in-possession shape shift. Identifies spatial corridors left vulnerable during transitions and returns counter-formations and squad players capable of exploiting those corridors.</li>
+  <li><strong>FootKGChemistry (Network Pathfinder):</strong> Computes relational multi-hop connections between players via shared former clubs, shared managers, national team affiliations, and positional synergies.</li>
+  <li><strong>FootKGQA (Natural Language Interface):</strong> Parses user intent from plain English questions into validated SPARQL templates, returning structured tabular data alongside natural language explanations.</li>
+</ul>
+
+<h3>3.2 Concrete SPARQL Query Example: Multi-Hop Tactical Replacement</h3>
+<pre>
+PREFIX footkg: &lt;http://tib.eu/footkg/ontology#&gt;
+PREFIX footres: &lt;http://tib.eu/footkg/resource/&gt;
+SELECT DISTINCT ?candidateName ?clubName ?marketValue ?roleName ?progPasses
+WHERE {
+    footres:Player_Rodri footkg:primaryRole ?targetRole .
+    ?candidate a footkg:Player ;
+               footkg:playerName ?candidateName ;
+               footkg:playsFor ?club ;
+               footkg:marketValueEUR ?marketValue ;
+               footkg:primaryRole ?role ;
+               footkg:progressivePassesPer90 ?progPasses .
+    ?club rdfs:label ?clubName . ?role rdfs:label ?roleName .
+    FILTER(?candidate != footres:Player_Rodri)
+    FILTER(?role = ?targetRole)
+    FILTER(?marketValue &lt;= 40000000)
+}
+ORDER BY DESC(?progPasses) ASC(?marketValue) LIMIT 5
+</pre>
+
+<h2>4. Evaluation & Quantitative Results</h2>
+<h3>4.1 Benchmark Evaluation Design</h3>
+<p>
+To rigorously evaluate the system according to the course rubric, a benchmark suite of <strong>20 comprehensive test cases</strong> (<code>benchmark_queries.json</code>) was developed and executed using an automated evaluation script (<code>evaluate.py</code>). The tests span 10 distinct categories:
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Evaluation Category</th>
+      <th>Test Cases</th>
+      <th>Pass Rate</th>
+      <th>Mean Latency</th>
+      <th>Representative Benchmark Query</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Player Replacement</strong></td>
+      <td>3</td>
+      <td><span class="badge">100% (3/3)</span></td>
+      <td>24.34 ms</td>
+      <td>Find replacements for Rodri (DeepLyingPlaymaker) under &euro;40M</td>
+    </tr>
+    <tr>
+      <td><strong>Coach Lineage</strong></td>
+      <td>3</td>
+      <td><span class="badge">100% (3/3)</span></td>
+      <td>2.22 ms</td>
+      <td>Which players in FootKG have been coached by Pep Guardiola?</td>
+    </tr>
+    <tr>
+      <td><strong>Tactical Counter</strong></td>
+      <td>3</td>
+      <td><span class="badge">100% (3/3)</span></td>
+      <td>5.62 ms</td>
+      <td>Identify vulnerable transition zones for 4-3-3 shifting to 3-2-5</td>
+    </tr>
+    <tr>
+      <td><strong>Chemistry & Synergy</strong></td>
+      <td>2</td>
+      <td><span class="badge">100% (2/2)</span></td>
+      <td>11.13 ms</td>
+      <td>Who shares direct tactical chemistry or club heritage with Saka?</td>
+    </tr>
+    <tr>
+      <td><strong>Role Synergy</strong></td>
+      <td>2</td>
+      <td><span class="badge">100% (2/2)</span></td>
+      <td>0.71 ms</td>
+      <td>Which tactical roles synergize with an Inverted Fullback?</td>
+    </tr>
+    <tr>
+      <td><strong>Spatial Analysis</strong></td>
+      <td>2</td>
+      <td><span class="badge">100% (2/2)</span></td>
+      <td>3.13 ms</td>
+      <td>Identify players operating in Half-Spaces / Zone 14 in possession</td>
+    </tr>
+    <tr>
+      <td><strong>Statistical Thresholds</strong></td>
+      <td>2</td>
+      <td><span class="badge">100% (2/2)</span></td>
+      <td>3.10 ms</td>
+      <td>Find players with progressive passes per 90 &ge; 7.0</td>
+    </tr>
+    <tr>
+      <td><strong>Transitive Event Chains</strong></td>
+      <td>1</td>
+      <td><span class="badge">100% (1/1)</span></td>
+      <td>1.20 ms</td>
+      <td>Trace sequential event chains via <code>directlyPrecedes+</code></td>
+    </tr>
+    <tr>
+      <td><strong>Scouting Affordability</strong></td>
+      <td>1</td>
+      <td><span class="badge">100% (1/1)</span></td>
+      <td>2.77 ms</td>
+      <td>Find players under 21 with market value under &euro;35M</td>
+    </tr>
+    <tr>
+      <td><strong>System Subsumption</strong></td>
+      <td>1</td>
+      <td><span class="badge">100% (1/1)</span></td>
+      <td>2.18 ms</td>
+      <td>Find managers utilizing systems subsumed by PositionalPlay</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+<strong>Aggregate Performance:</strong> The system achieved a <strong>100.0% Pass Rate (20/20)</strong> with an average execution latency of <strong>6.94 milliseconds</strong> across all SPARQL queries, demonstrating exceptional speed and logical correctness.
+</p>
+
+<div class="page-break"></div>
+
+<h3>4.2 Qualitative Discussion of Results</h3>
+<ul>
+  <li><strong>Scouting Validity:</strong> When replacing Rodri (&euro;130M benchmark), the graph identified <strong>Alan Varela</strong> (&euro;35M, Porto) and <strong>Adam Wharton</strong> (&euro;30M, Crystal Palace) as optimal replacements. Both share the <code>DeepLyingPlaymaker</code> archetype, anchor the central third, and register progressive passing rates over 7.9 per 90, matching tactical expectations in professional recruitment.</li>
+  <li><strong>Structural Vulnerability Reasoning:</strong> For Manchester City's transition from 4-3-3 into 3-2-5, `FootKG` successfully identified that tucking fullbacks inside into half-spaces vacates the <em>Defensive Right Flank</em> and <em>Defensive Left Flank</em>. It recommended a <code>5-3-2 Direct Counter</code> formation deployed with rapid touchline wingers to exploit the vacated wide channels.</li>
+</ul>
+
+<h2>5. Conclusion & Reflection</h2>
+<h3>5.1 Summary & Key Takeaways</h3>
+<p>
+<code>FootKG</code> proves that knowledge graphs can elevate sports analytics from isolated statistical aggregation to deep semantic reasoning. Modeling entities, roles, and tactical systems as an RDF graph unlocks multi-hop scouting and dynamic counter-strategy inference that cannot be achieved with standard SQL or standalone LLMs.
+</p>
+
+<h3>5.2 Critical Reflection: What Didn't Work So Well?</h3>
+<p>
+Discretizing dynamic football pitch continuous coordinates into an 18-zone discrete grid incurs a slight loss of micro-positional precision (e.g., exact meter-level body orientation). While this is well-suited for macro-tactical archetypes, modeling micro-second movement trajectories requires dense spatio-temporal triples that increase graph size rapidly.
+</p>
+
+<h3>5.3 What Would Be Done Differently</h3>
+<p>
+If given a second chance, we would incorporate <strong>SHACL (Shapes Constraint Language)</strong> validation during ingestion to automatically enforce integrity constraints (e.g., ensuring every player has exactly one primary tactical role and positive market valuation). Furthermore, we would deploy a persistent triplestore (such as Apache Jena Fuseki or Ontotext GraphDB) with GeoSPARQL plugin support for coordinate polygon bounding queries.
+</p>
+
+<h3>5.4 Ideas for Further Work</h3>
+<ul>
+  <li><strong>Real-Time StatsBomb 360 Event Feeds:</strong> Streaming live match event feeds directly into the graph via Kafka or CDC to enable real-time in-game tactical adjustments.</li>
+  <li><strong>Graph Neural Network (GNN) Transfer Prediction:</strong> Training link prediction models over the <code>hasChemistryWith</code> and <code>synergizesWith</code> relations to predict squad cohesion and transfer success prior to costly player acquisitions.</li>
+</ul>
+
+</body>
+</html>

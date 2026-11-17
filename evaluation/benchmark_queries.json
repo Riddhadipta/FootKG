@@ -1,0 +1,137 @@
+[
+  {
+    "id": "TC_01",
+    "category": "Player Replacement",
+    "query": "Find replacements for Rodri with primary role DeepLyingPlaymaker under 40M",
+    "expected_top": "Adam Wharton",
+    "min_results": 1
+  },
+  {
+    "id": "TC_02",
+    "category": "Player Replacement",
+    "query": "Find replacements for Zinchenko matching InvertedFullback under 40M",
+    "expected_top": "Rayan Ait-Nouri",
+    "min_results": 1
+  },
+  {
+    "id": "TC_03",
+    "category": "Player Replacement",
+    "query": "Find replacements for Bukayo Saka under 50M with TouchlineWinger archetype",
+    "expected_top": "Johan Bakayoko",
+    "min_results": 1
+  },
+  {
+    "id": "TC_04",
+    "category": "Coach Lineage",
+    "query": "Which players in FootKG have been coached by Pep Guardiola?",
+    "expected_entities": ["Rodri Hernandez", "Rico Lewis", "Oleksandr Zinchenko"],
+    "min_results": 3
+  },
+  {
+    "id": "TC_05",
+    "category": "Coach Lineage",
+    "query": "Which players have been coached by Mikel Arteta at Arsenal?",
+    "expected_entities": ["Bukayo Saka", "Declan Rice", "Oleksandr Zinchenko"],
+    "min_results": 3
+  },
+  {
+    "id": "TC_06",
+    "category": "Coach Lineage",
+    "query": "Find players coached by Xabi Alonso at Bayer Leverkusen",
+    "expected_entities": ["Florian Wirtz", "Jeremie Frimpong"],
+    "min_results": 2
+  },
+  {
+    "id": "TC_07",
+    "category": "Tactical Counter",
+    "query": "What formation exploits the weakness of Manchester City's 4-3-3?",
+    "expected_counter": "5-3-2 Direct Counter",
+    "min_results": 1
+  },
+  {
+    "id": "TC_08",
+    "category": "Tactical Counter",
+    "query": "Identify vulnerable transition zones for a 4-3-3 formation transitioning to 3-2-5",
+    "expected_zones": ["Defensive Right Flank", "Defensive Left Flank"],
+    "min_results": 2
+  },
+  {
+    "id": "TC_09",
+    "category": "Tactical Counter",
+    "query": "How to counter a compact 4-4-2 low block?",
+    "expected_counter": "4-2-3-1 Double Pivot",
+    "min_results": 1
+  },
+  {
+    "id": "TC_10",
+    "category": "Chemistry & Synergy",
+    "query": "Who shares direct tactical chemistry with Bukayo Saka?",
+    "expected_entities": ["Declan Rice", "Jude Bellingham"],
+    "min_results": 2
+  },
+  {
+    "id": "TC_11",
+    "category": "Chemistry & Synergy",
+    "query": "Identify players with shared Manchester City club heritage to Oleksandr Zinchenko",
+    "expected_entities": ["Rico Lewis"],
+    "min_results": 1
+  },
+  {
+    "id": "TC_12",
+    "category": "Role Synergy",
+    "query": "Which tactical roles synergize with an Inverted Fullback?",
+    "expected_role": "Touchline Winger",
+    "min_results": 1
+  },
+  {
+    "id": "TC_13",
+    "category": "Role Synergy",
+    "query": "Which tactical roles synergize with a Deep-Lying Playmaker?",
+    "expected_role": "Box-to-Box Midfielder",
+    "min_results": 1
+  },
+  {
+    "id": "TC_14",
+    "category": "Spatial Analysis",
+    "query": "Which players operate in Zone 14 (Central Edge of Opponent Box) in possession?",
+    "expected_role": "InsideForward",
+    "min_results": 2
+  },
+  {
+    "id": "TC_15",
+    "category": "Spatial Analysis",
+    "query": "Identify pitch zones adjacent to Middle Third Central Circle (Zone 8)",
+    "min_results": 2
+  },
+  {
+    "id": "TC_16",
+    "category": "Statistical Threshold",
+    "query": "Find players with progressive passes per 90 greater than 7.5",
+    "min_results": 3
+  },
+  {
+    "id": "TC_17",
+    "category": "Statistical Threshold",
+    "query": "Find midfield anchors with pressure frequency over 16.0 per 90",
+    "min_results": 2
+  },
+  {
+    "id": "TC_18",
+    "category": "Transitive Event Chains",
+    "query": "Trace sequential match event chains originating from defensive third to opponent box",
+    "min_results": 3
+  },
+  {
+    "id": "TC_19",
+    "category": "Scouting Affordability",
+    "query": "Find players under 21 years old with market value below 35M EUR",
+    "min_results": 3
+  },
+  {
+    "id": "TC_20",
+    "category": "System Subsumption",
+    "query": "Find managers utilizing a tactical system subsumed by PositionalPlay",
+    "expected_entities": ["Pep Guardiola", "Mikel Arteta", "Xabi Alonso"],
+    "min_results": 3
+  }
+]
